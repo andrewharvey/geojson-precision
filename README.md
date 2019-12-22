@@ -11,11 +11,15 @@ npm install [-g] geojson-precision
 ## API
 
 
-### .parse(*geojson*, *precision*)
+### .parse(*geojson*, *precision*, *extrasPrecision*, *options*)
 
 ````geojson```` is a valid GeoJSON object, and can be of type ````Point````, ````LineString````, ````Polygon````, ````MultiPoint````, ````MultiPolygon````, ````MultiLineString````, ````GeometryCollection````, ````Feature````, or ````FeatureCollection````. If you are unsure whether or not your GeoJSON object is valid, you can run it through a linter such as [geojsonhint](https://github.com/mapbox/geojsonhint).
 
 ````precision```` is a positive integer. If your specified ````precision```` value is greater than the precision of the input geometry, the output precision will be the same as the input. For example, if your input coordinates are ````[10.0, 20.0]````, and you specify a ````precision```` of ````5````, the output will be the same as the input.
+
+````extrasPrecision```` is a positive integer. If your specified ````extrasPrecision```` value is greater than the precision of the input geometry, the output precision will be the same as the input. For example, if your input coordinates are ````[10.0, 20.0]````, and you specify a ````precision```` of ````5````, the output will be the same as the input.
+
+````options```` `{ avoidPoint: true, avoidLineString: true, avoidPolygon: true}`
 
 
 ##### Example use:

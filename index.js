@@ -1,6 +1,7 @@
 (function() {
 
-  function parse(t, coordinatePrecision, extrasPrecision) {
+  function parse(t, coordinatePrecision, extrasPrecision, options) {
+    options = options || {};
 
     function point(p) {
       return p.map(function(e, index) {
@@ -31,18 +32,28 @@
       
       switch (obj.type) {
         case "Point":
-          obj.coordinates = point(obj.coordinates);
+          if (!options.skipPoint)
+            obj.coordinates = point(obj.coordinates);
           return obj;
         case "LineString":
+          if (!options.skipLineString)
+            obj.coordinates = multi(obj.coordinates);
+          return obj;
         case "MultiPoint":
-          obj.coordinates = multi(obj.coordinates);
+          if (!options.skipPoint)
+            obj.coordinates = multi(obj.coordinates);
           return obj;
         case "Polygon":
+          if (!options.skipPolygon)
+            obj.coordinates = poly(obj.coordinates);
+          return obj;
         case "MultiLineString":
-          obj.coordinates = poly(obj.coordinates);
+          if (!options.skipLineString)
+            obj.coordinates = poly(obj.coordinates);
           return obj;
         case "MultiPolygon":
-          obj.coordinates = multiPoly(obj.coordinates);
+          if (!options.skipPolygon)
+            obj.coordinates = multiPoly(obj.coordinates);
           return obj;
         case "GeometryCollection":
           obj.geometries = obj.geometries.map(geometry);
